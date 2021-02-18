@@ -27,4 +27,18 @@
 			where id = #{id}
 		]]>
 	</select>
+	
+	<!-- 로그인을 위해 회원정보 가져오자 -->
+	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+			select  userNo,
+			        id,
+			        userName
+			from users 
+			where id = #{id}
+			and password = #{password}
+		]]>
+	</select>
+	
+	
 </mapper>

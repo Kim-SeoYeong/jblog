@@ -46,4 +46,11 @@ public class UserService {
 		return result;
 	}
 	
+	//로그인
+	public UserVo login(UserVo userVo) {
+		System.out.println("[userService.login()]");
+		
+		return userDao.selectUser(userVo);
+	}
+	
 }
