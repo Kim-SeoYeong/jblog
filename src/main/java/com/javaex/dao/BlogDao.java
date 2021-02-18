@@ -13,8 +13,16 @@ public class BlogDao {
 
 	//블로그 한개 조회하기
 	public BlogVo userSelectOne(String id) {
-		System.out.println("[userDao.blogSelectOne()]");
+		System.out.println("[BlogDao.blogSelectOne()]");
 		
 		return sqlSession.selectOne("blog.blogSelectOne", id);
+	}
+	
+	//블로그 기본설정 update
+	public void basicUpdate(BlogVo blogVo) {
+		System.out.println("[BlogDao.basicUpdate()]");
+		
+		System.out.println(blogVo);
+		sqlSession.update("blog.basicUpdate", blogVo);
 	}
 }

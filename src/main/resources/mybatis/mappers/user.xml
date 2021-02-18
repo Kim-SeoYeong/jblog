@@ -15,7 +15,7 @@
 		]]>
 	</insert>
 	
-	<!-- 블로그 한개 조회 -->
+	<!-- id체크에 필요한 select -->
 	<select id="selectById" parameterType="string" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
 			select  userNo,
