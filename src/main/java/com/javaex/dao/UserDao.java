@@ -26,5 +26,10 @@ public class UserDao {
 		sqlSession.insert("blog.blogInsert", blogVo);
 	}
 	
-
+	//아이디 체크를위해 한명 조회
+	public UserVo idSelectOne(String id) {
+		System.out.println("[userDao.idSelectOne()]");
+		System.out.println(id);
+		return sqlSession.selectOne("user.selectById", id);
+	}
 }

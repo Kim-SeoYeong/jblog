@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>JBlog</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
 </head>
@@ -30,7 +33,7 @@
 		      		</tr>
 		      		<tr>
 		      			<td></td>
-		      			<td id="tdMsg" colspan="2">사용할 수 있는 아이디 입니다.</td>
+		      			<td id="tdMsg" colspan="2"></td>
 		      		</tr> 
 		      		<tr>
 		      			<td><label for="txtPassword">패스워드</label> </td>
@@ -66,5 +69,40 @@
 
 </body>
 
+<script type="text/javascript">
+	//아이디 중복체크
+	$("#btnIdCheck").on("click", function(){
+		console.log("아이디 중복체크 버튼 클릭");
+		
+		var id = $("#txtId").val();
+		console.log(id);
+		
+		//ajax 데이터만 받을래
+		$.ajax({
+			//보낼때
+			url : "${pageContext.request.contextPath}/user/idcheck",
+			type : "post",
+			//contentType : "application/json",
+			data : {id : id},
 
+			//데이터를 받을때.
+			dataType : "text",
+			success : function(result){	//can이나 cant가 result에 담겨서옴.
+				/*성공시 처리해야될 코드 작성*/
+				if (result == "can") {
+					console.log("can");
+					$("#tdMsg").html("사용할 수 있는 아이디 입니다.");
+				} else {
+					console.log("cant");
+					$("#tdMsg").html("사용할 수 없는 아이디 입니다.");
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	});
+	
+</script>
+	
 </html>

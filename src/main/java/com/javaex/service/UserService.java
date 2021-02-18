@@ -29,4 +29,21 @@ public class UserService {
 		userDao.blogInsert(blogVo);
 	}
 	
+	//아이디체크
+	public String checkId(String id) {
+		System.out.println("[userService.checkId()]");
+		
+		UserVo userVo = userDao.idSelectOne(id);
+		
+		String result = "";
+		
+		if(userVo == null) {
+			result = "can";
+		} else {
+			result = "cant";
+		}
+		
+		return result;
+	}
+	
 }

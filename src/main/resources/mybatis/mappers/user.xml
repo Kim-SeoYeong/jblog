@@ -16,17 +16,15 @@
 	</insert>
 	
 	<!-- 블로그 한개 조회 -->
-	<select id="userSelectOne" parameterType="string" resultType="com.javaex.vo.UserVo">
+	<select id="selectById" parameterType="string" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
-			select  u.userNo,
-			        u.id,
-			        u.userName,
-			        u.password,
-			        b.blogTitle,
-			        b.logoFile
-			from users u, blog b
-			where u.id = b.id
-			and b.id = #{id}
+			select  userNo,
+			        id,
+			        userName,
+			        password,
+			        joinDate
+			from users 
+			where id = #{id}
 		]]>
 	</select>
 </mapper>
