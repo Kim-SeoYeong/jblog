@@ -27,18 +27,21 @@
 					<!-- 사용자업로드 이미지 -->
 					<%-- <img id="proImg" src=""> --%>
 					
-					<div id="nick">정우성(hijava)님</div>
+					<div id="nick">${blogVo.userName}(${blogVo.id})님</div>
 				</div>
 				<div id="cate">
 					<div class="text-left">
 						<strong>카테고리</strong>
 					</div>
 					<ul id="cateList" class="text-left">
+						<!-- 로그인하면 보이게 -->
+						<!--
 						<li><a href="$}">카테고리5</a></li>
 						<li><a href="$}">카테고리4</a></li>
 						<li><a href="$}">카테고리3</a></li>
 						<li><a href="$}">카테고리2</a></li>
 						<li><a href="$}">카테고리1</a></li>
+						 -->
 						<li><a href="$}">미분류</a></li>
 						
 					</ul>
@@ -49,17 +52,25 @@
 			<div id="post_area">
 				
 				<div id="postBox" class="clearfix">
+					<div id="postTitle" class="text-left"><strong>등록된 글이 없습니다.</strong></div>
+				<!-- 
 						<div id="postTitle" class="text-left"><strong>08.페이징</strong></div>
 						<div id="postDate" class="text-left"><strong>2020/07/23</strong></div>
 						<div id="postNick">정우성(hijava)님</div>
+				 -->
 				</div>
 				<!-- //postBox -->
-			
+				
+				
+				<!-- 로그인하면 보이게 -->
 				<div id="post" >
+				<!-- 로그인하면 보이게 -->
+				<!--
 					대통령은 법률이 정하는 바에 의하여 사면·감형 또는 복권을 명할 수 있다. 
 					대통령의 임기는 5년으로 하며, 중임할 수 없다. 법관은 탄핵 또는 금고 이상의 
 					형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 
 					정직·감봉 기타 불리한 처분을 받지 아니한다.
+					-->
 				</div>
 				<!-- //post -->
 				
@@ -77,6 +88,9 @@
 				
 				<div id="list">
 					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
+					
+					<!-- 로그인하면 보이게 -->
+					<!-- 
 					<table>
 						<colgroup>
 							<col style="">
@@ -106,6 +120,7 @@
 						
 						
 					</table>
+					 -->
 				</div>
 				<!-- //list -->
 			</div>

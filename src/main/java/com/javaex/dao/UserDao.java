@@ -1,8 +1,30 @@
 package com.javaex.dao;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.javaex.vo.BlogVo;
+import com.javaex.vo.UserVo;
 
 @Repository
 public class UserDao {
+	@Autowired
+	private SqlSession sqlSession;
+	
+	//회원가입 정보 저장
+	public void userInsert(UserVo userVo) {
+		System.out.println("[userDao.userInsert()]");
+		
+		sqlSession.insert("user.userInsert", userVo);
+	}
+	
+	//블로그 테이벌에 정보 저장
+	public void blogInsert(BlogVo blogVo) {
+		System.out.println("[userDao.blogInsert()]");
+		
+		sqlSession.insert("blog.blogInsert", blogVo);
+	}
+	
 
 }

@@ -11,7 +11,7 @@ public class UserVo {
 
 	//생성자
 	public UserVo() {}
-	
+
 	public UserVo(int userNo, String id, String userName, String password, int joinDate) {
 		this.userNo = userNo;
 		this.id = id;
@@ -60,13 +60,13 @@ public class UserVo {
 	public void setJoinDate(int joinDate) {
 		this.joinDate = joinDate;
 	}
-
-	//일반메소드
 	
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", id=" + id + ", userName=" + userName + ", password=" + password
 				+ ", joinDate=" + joinDate + "]";
-	}	
+	}
 	
+	
+
 }
