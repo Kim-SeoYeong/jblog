@@ -94,15 +94,15 @@
 				//data : {name : "홍길동"}
 
 				dataType : "json",
-				//success : function(categoryList){
+				success : function(categoryList){
 					//성공시 처리해야될 코드 작성
-					//console.log("과연 성공하나요!!!::::" + categoryList);
+					console.log("과연 성공하나요!!!::::" + categoryList);
 					
-					for(var i = 0; i < categoryList.length; i++) {
-						render(categoryList[i]);
-					}
+					//for(var i = 0; i < categoryList.length; i++) {
+						//render(categoryList[i]);
+					//}
 					
-				//},
+				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
@@ -110,7 +110,6 @@
 		}
 		
 	});
-
 */
 </script>
 

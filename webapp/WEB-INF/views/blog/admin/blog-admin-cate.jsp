@@ -105,6 +105,12 @@
 		cateList();
 	});
 	
+	//삭제버튼 클릭시 
+	$(".text-center").on("click", "img", function(){
+		event.preventDefault();
+		console.log("삭제버튼 클릭!");
+	});
+	
 	//카테고리 추가 버튼 클릭
 	$("#btnAddCate").on("click", function(){
 		console.log("카테고리추가 버튼 클릭!");
@@ -149,17 +155,17 @@
 	//카테고리 데이터 + html
 	function render(categoryVo) {
 		var str = '';
-		str += '<tr>';
+		str += '<tr id="t-' + categoryVo.cateNo + '">';
 		str += '	<td>' + categoryVo.cateNo + '</td>';
 		str += '	<td>' + categoryVo.cateName + '</td>';
 		str += '	<td>' + categoryVo.postCount + '</td>';
 		str += '	<td>' + categoryVo.description + '</td>';
 		str += '	<td class="text-center">';
-		str += '		<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
+		str += '		<img data-no="' + categoryVo.cateNo + '"class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
 		str += '	</td>';
 		str += '</tr>';
 		
-		$("#cateList").prepend(str);
+		$("#cateList").append(str);
 	}
 	
 	//카테고리 전체 리스트 출력
@@ -171,15 +177,18 @@
 		//ajax
 		$.ajax({
 			
-			url : "${pageContext.request.contextPath}/"+id+"/admin/category2",		
+			url : "${pageContext.request.contextPath}/admin/list",		
 			type : "post",
 			//contentType : "application/json",
-			//data : {name : "홍길동"}
+			data : {id : id},
 
 			dataType : "json",
 			success : function(categoryList){
 				//성공시 처리해야될 코드 작성
-				console.log("과연 성공하나요!!!::::" + categoryList);
+				console.log("성공!");
+				console.log(categoryList);
+				console.log(categoryList.cateNo);
+				console.log(categoryList.cateName);
 				
 				for(var i = 0; i < categoryList.length; i++) {
 					render(categoryList[i]);

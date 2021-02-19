@@ -2,6 +2,8 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,16 +88,16 @@ public class BlogController {
 
 	}
 	
-	//카테고리 관리폼2(ajax 리스트 뿌려주기위해서 만듬)
-	//하나로 해보려했는데 도저히 안되네ㅠㅠㅠㅠ일단 다음부분때매 이렇게 하고 넘기자
+	//카테고리 관리 리스트 뿌리기(ajax 리스트 뿌려주기위해서 만듬)
 	@ResponseBody
-	@RequestMapping(value="/{id}/admin/category2", method={RequestMethod.GET, RequestMethod.POST})
-	public List<CategoryVo> categoryForm2(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value="/admin/list", method={RequestMethod.GET, RequestMethod.POST})
+	public List<CategoryVo> categoryForm(@ModelAttribute CategoryVo categoryVo) {
 		System.out.println("[BlogController.categoryForm()");
-		List<CategoryVo> cList = categoryService.categoryList(id);
+		System.out.println(categoryVo.getId());
+		List<CategoryVo> cList = categoryService.categoryList(categoryVo.getId());
 		System.out.println(cList);
 		
-		return categoryService.categoryList(id);
+		return categoryService.categoryList(categoryVo.getId());
 	}
 	
 	
