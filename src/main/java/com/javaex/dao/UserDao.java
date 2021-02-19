@@ -18,14 +18,7 @@ public class UserDao {
 		
 		sqlSession.insert("user.userInsert", userVo);
 	}
-	
-	//블로그 테이벌에 정보 저장
-	public void blogInsert(BlogVo blogVo) {
-		System.out.println("[userDao.blogInsert()]");
-		
-		sqlSession.insert("blog.blogInsert", blogVo);
-	}
-	
+
 	//아이디 체크를위해 한명 조회
 	public UserVo idSelectOne(String id) {
 		System.out.println("[userDao.idSelectOne()]");

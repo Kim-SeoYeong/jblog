@@ -38,16 +38,12 @@
 						<strong>카테고리</strong>
 					</div>
 					<ul id="cateList" class="text-left">
-						<!-- 로그인하면 보이게 -->
-						<!--
-						<li><a href="$}">카테고리5</a></li>
-						<li><a href="$}">카테고리4</a></li>
-						<li><a href="$}">카테고리3</a></li>
-						<li><a href="$}">카테고리2</a></li>
-						<li><a href="$}">카테고리1</a></li>
-						 -->
+						<c:forEach items="${categoryList}" var="categoryList">
+							<li><a href="$}">${categoryList.cateName}</a></li>
+						</c:forEach>
+						<!-- 
 						<li><a href="$}">미분류</a></li>
-						
+						-->
 					</ul>
 				</div>
 			</div>

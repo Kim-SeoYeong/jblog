@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 </head>
 
@@ -19,8 +19,8 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
+				<li class="tabbtn"><a href="">기본설정</a></li>
+				<li class="tabbtn selected"><a href="">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -46,24 +46,17 @@
 		      		</thead>
 		      		<tbody id="cateList">
 		      			<!-- 리스트 영역 -->
-		      			<tr>
-							<td>1</td>
-							<td>자바프로그래밍</td>
-							<td>7</td>
-							<td>자바기초와 객체지향</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>오라클</td>
-							<td>5</td>
-							<td>오라클 설치와 sql문</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
+ 						<c:forEach items="${cateList}" var="categoryList">
+			      			<tr>
+								<td>${categoryList.cateNo}</td>
+								<td>${categoryList.cateName}</td>
+								<td>0</td>
+								<td>${categoryList.description}</td>
+							    <td class='text-center'>
+							    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+							    </td>
+							 </tr>
+						 </c:forEach> 
 						<!-- 리스트 영역 -->
 					</tbody>
 				</table>
@@ -101,7 +94,74 @@
 	<!-- //wrap -->
 </body>
 
+<script type="text/javascript">
+	//브라우저 준비가 끝났을때
+	/*
+	$("document").ready(function(){
+		console.log("ready");
 
+	});
+	*/
+	
+	//카테고리 추가 버튼 클릭
+	
+	
+	/*
+	//카테고리 데이터 + html
+	function render(categoryVo, updown) {
+		var str = '';
+		str += '<tr>';
+		str += '	<td>' + categoryVo.cateNo + '</td>';
+		str += '	<td>' + categoryVo.cateName + '</td>';
+		str += '	<td> 0 </td>';
+		str += '	<td>' + categoryVo.description + '</td>';
+		str += '	<td class="text-center">';
+		str += '		<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
+		str += '	</td>';
+		str += '</tr>';
+		
+		if(updown == "down") {
+			$("#cateList").append(str);
+		} else if(updown == "up") {
+			$("#cateList").prepend(str);
+		} else {
+			console.log("테이블 순서 미지정");
+		}
+	}
+	*/
+	/*
+	//카테고리 전체 리스트 출력
+	function cateList() {
+		
+		var id = "${authUser.id}";
+		console.log(id);
+		
+		//ajax
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath}/"+id+"/admin/category",		
+			type : "post",
+			//contentType : "application/json",
+			//data : {name : "홍길동"}
+
+			dataType : "json",
+			success : function(categoryList){
+				//성공시 처리해야될 코드 작성
+				console.log(categoryList);
+				
+				for(var i = 0; i < categoryList.length; i++) {
+					render(categoryList[i], "down");
+				}
+				
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});	
+	}
+	*/
+</script>
 
 
 </html>

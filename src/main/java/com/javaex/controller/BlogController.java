@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
+import com.javaex.service.CategoryService;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Controller
 public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	//메인화면
 	@RequestMapping(value="/", method={RequestMethod.GET, RequestMethod.POST})
@@ -31,9 +38,15 @@ public class BlogController {
 	public String blogForm(@PathVariable("id") String id, Model model) {
 		System.out.println("[BlogController.blogForm()");
 		
-		BlogVo blogVo = blogService.userSelectOne(id);
+		//Map<String, Object> tMap = blogService.totalSelectOne(id);
+		
+		//model.addAttribute("tMap", tMap);
+		
+		BlogVo blogVo = blogService.blogSelectOne(id);
+		List<CategoryVo> categoryList = categoryService.categoryList(id);
 		
 		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("categoryList", categoryList);
 		
 		return "blog/blog-main";
 	}
@@ -42,7 +55,8 @@ public class BlogController {
 	@RequestMapping(value="/{id}/admin/basic", method={RequestMethod.GET, RequestMethod.POST})
 	public String adminForm(@PathVariable("id") String id, Model model){
 		System.out.println("[BlogController.adminForm()");
-		BlogVo blogVo = blogService.userSelectOne(id);
+		
+		BlogVo blogVo = blogService.blogSelectOne(id);
 		
 		model.addAttribute("blogVo", blogVo);
 		
@@ -58,11 +72,29 @@ public class BlogController {
 		return "redirect:/"+ blogVo.getId() + "/admin/basic";
 	}
 	
+	
 	//카테고리 관리폼
-	@RequestMapping
-	public String categoryForm() {
+	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
+	public String categoryForm(@PathVariable("id") String id, Model model) {
 		System.out.println("[BlogController.categoryForm()");
+		
+		List<CategoryVo> cateList =  categoryService.categoryList(id);
+		model.addAttribute("cateList", cateList);
+		
+		return "blog/admin/blog-admin-cate";
+
 	}
 	
+	/*
+	//카테고리 관리폼
+	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public List<CategoryVo> categoryForm(@PathVariable("id") String id, Model model) {
+		System.out.println("[BlogController.categoryForm()");
+		
+		return categoryService.categoryList(id);
+
+	}
+	*/
 	
 }

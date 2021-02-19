@@ -19,10 +19,10 @@ public class BlogService {
 	private BlogDao blogDao;
 
 	//블로그 한명 조회하기
-	public BlogVo userSelectOne(String id) {
+	public BlogVo blogSelectOne(String id) {
 		System.out.println("[blogService.userSelectOne()]");
-		
-		return blogDao.userSelectOne(id);
+
+		return blogDao.blogSelectOne(id);
 	}
 	
 	//블로그 프로필 수정
