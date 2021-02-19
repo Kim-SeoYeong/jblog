@@ -32,4 +32,18 @@
 		order by cateNo desc
 		]]>
 	</select>
+	
+	<!-- 카테고리 한개 조회하기 -->
+	<select id="cateSelectOne" parameterType="int" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+		select  cateNo,
+		        id,
+		        cateName,
+		        description,
+		        regDate
+		from category
+		where cateNo = #{cateNo}
+		]]>
+	</select>
+	
 </mapper>

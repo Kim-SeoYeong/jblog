@@ -19,8 +19,8 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -71,5 +71,47 @@
 	</div>
 	<!-- //wrap -->
 </body>
+
+<script type="text/javascript">
+/*
+	$("#admin-menu").on("click", "a", function(){
+		event.preventDefault();
+		console.log("ul 클릭");
+		//console.log($(this));
+		//event.preventDefault();
+	
+		var str = $(this).text();
+		console.log(str);
+		
+		if(str == '카테고리') {
+			var id = "${authUser.id}";
+			console.log(id);
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/"+id+"/admin/category",		
+				type : "post",
+				//contentType : "application/json",
+				//data : {name : "홍길동"}
+
+				dataType : "json",
+				//success : function(categoryList){
+					//성공시 처리해야될 코드 작성
+					//console.log("과연 성공하나요!!!::::" + categoryList);
+					
+					for(var i = 0; i < categoryList.length; i++) {
+						render(categoryList[i]);
+					}
+					
+				//},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});	
+		}
+		
+	});
+
+*/
+</script>
 
 </html>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
@@ -72,29 +73,40 @@ public class BlogController {
 		return "redirect:/"+ blogVo.getId() + "/admin/basic";
 	}
 	
-	
 	//카테고리 관리폼
 	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
 	public String categoryForm(@PathVariable("id") String id, Model model) {
 		System.out.println("[BlogController.categoryForm()");
 		
-		List<CategoryVo> cateList =  categoryService.categoryList(id);
-		model.addAttribute("cateList", cateList);
+		BlogVo blogVo = blogService.blogSelectOne(id);
+		
+		model.addAttribute("blogVo", blogVo);
 		
 		return "blog/admin/blog-admin-cate";
 
 	}
 	
-	/*
-	//카테고리 관리폼
-	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
+	//카테고리 관리폼2(ajax 리스트 뿌려주기위해서 만듬)
+	//하나로 해보려했는데 도저히 안되네ㅠㅠㅠㅠ일단 다음부분때매 이렇게 하고 넘기자
 	@ResponseBody
-	public List<CategoryVo> categoryForm(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value="/{id}/admin/category2", method={RequestMethod.GET, RequestMethod.POST})
+	public List<CategoryVo> categoryForm2(@PathVariable("id") String id, Model model) {
 		System.out.println("[BlogController.categoryForm()");
+		List<CategoryVo> cList = categoryService.categoryList(id);
+		System.out.println(cList);
 		
 		return categoryService.categoryList(id);
-
 	}
-	*/
+	
+	
+	//카테고리 추가 insert
+	@ResponseBody
+	@RequestMapping(value="/admin/categoryAdd", method={RequestMethod.GET, RequestMethod.POST})
+	public CategoryVo categoryAdd(@ModelAttribute CategoryVo categoryVo) {
+		System.out.println("[BlogController.categoryAdd()");
+		CategoryVo cateVo = categoryService.categoryInsert(categoryVo);
+		
+		return cateVo;
+	}
 	
 }

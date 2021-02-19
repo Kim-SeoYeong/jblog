@@ -19,8 +19,8 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn"><a href="">기본설정</a></li>
-				<li class="tabbtn selected"><a href="">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -46,6 +46,7 @@
 		      		</thead>
 		      		<tbody id="cateList">
 		      			<!-- 리스트 영역 -->
+		      			<!-- 
  						<c:forEach items="${cateList}" var="categoryList">
 			      			<tr>
 								<td>${categoryList.cateNo}</td>
@@ -56,7 +57,8 @@
 							    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
 							    </td>
 							 </tr>
-						 </c:forEach> 
+						 </c:forEach>
+						  --> 
 						<!-- 리스트 영역 -->
 					</tbody>
 				</table>
@@ -95,41 +97,71 @@
 </body>
 
 <script type="text/javascript">
-	//브라우저 준비가 끝났을때
-	/*
+	//브라우저 준비가 끝났을때(DOM이 생성되면)
 	$("document").ready(function(){
 		console.log("ready");
-
+		
+		//리스트 출력
+		cateList();
 	});
-	*/
 	
 	//카테고리 추가 버튼 클릭
+	$("#btnAddCate").on("click", function(){
+		console.log("카테고리추가 버튼 클릭!");
+
+		var id = "${authUser.id}";
+		var cateName = $("[name='name']").val();
+		var description = $("[name='desc']").val();
+		
+		console.log("name = " + cateName);
+		console.log("desc = " + description);
+		console.log("id = " + id);
+
+		//등록데이터 수집
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath}/admin/categoryAdd",		
+			type : "post",
+			//contentType : "application/json",		
+			data : {cateName : cateName,
+					description : description,
+					id : id},
+
+			dataType : "json",
+			success : function(categoryVo){
+				//성공시 처리해야될 코드 작성
+				console.log(categoryVo);
+				render(categoryVo);
+				
+				//location.reload();
+				//입력폼 비우기
+				$("[name='name']").val("");
+				$("[name='desc']").val("");
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
 	
-	
-	/*
+	});
+
 	//카테고리 데이터 + html
-	function render(categoryVo, updown) {
+	function render(categoryVo) {
 		var str = '';
 		str += '<tr>';
 		str += '	<td>' + categoryVo.cateNo + '</td>';
 		str += '	<td>' + categoryVo.cateName + '</td>';
-		str += '	<td> 0 </td>';
+		str += '	<td>' + categoryVo.postCount + '</td>';
 		str += '	<td>' + categoryVo.description + '</td>';
 		str += '	<td class="text-center">';
 		str += '		<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
 		str += '	</td>';
 		str += '</tr>';
 		
-		if(updown == "down") {
-			$("#cateList").append(str);
-		} else if(updown == "up") {
-			$("#cateList").prepend(str);
-		} else {
-			console.log("테이블 순서 미지정");
-		}
+		$("#cateList").prepend(str);
 	}
-	*/
-	/*
+	
 	//카테고리 전체 리스트 출력
 	function cateList() {
 		
@@ -139,7 +171,7 @@
 		//ajax
 		$.ajax({
 			
-			url : "${pageContext.request.contextPath}/"+id+"/admin/category",		
+			url : "${pageContext.request.contextPath}/"+id+"/admin/category2",		
 			type : "post",
 			//contentType : "application/json",
 			//data : {name : "홍길동"}
@@ -147,20 +179,20 @@
 			dataType : "json",
 			success : function(categoryList){
 				//성공시 처리해야될 코드 작성
-				console.log(categoryList);
+				console.log("과연 성공하나요!!!::::" + categoryList);
 				
 				for(var i = 0; i < categoryList.length; i++) {
-					render(categoryList[i], "down");
+					render(categoryList[i]);
 				}
-				
 				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		});	
+	
 	}
-	*/
+
 </script>
 
 

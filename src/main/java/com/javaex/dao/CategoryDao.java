@@ -30,10 +30,17 @@ public class CategoryDao {
 		//System.out.println("xml 실행후 ==> " + categoryVo);
 	}
 	
-	//카테고리 조회
+	//카테고리 목록 조회
 	public List<CategoryVo> categoryList(String id) {
 		System.out.println("[categoryDao.categorySelect()");
 
 		return sqlSession.selectList("category.categoryList", id);
+	}
+	
+	//카테고리 1개 조회
+	public CategoryVo categorySelectOne(int cateNo) {
+		System.out.println("[categoryDao.categorySelectOne()");
+
+		return sqlSession.selectOne("category.cateSelectOne", cateNo);
 	}
 }
