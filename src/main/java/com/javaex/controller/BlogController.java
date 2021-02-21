@@ -49,12 +49,17 @@ public class BlogController {
 		System.out.println("[BlogController.blogForm()]");
 		
 		BlogVo blogVo = blogService.blogSelectOne(id);
-		Map<String, Object> tMap = categoryService.blogTotalList(id, cateNo, postNo);
 		
-		model.addAttribute("blogVo", blogVo);
-		model.addAttribute("tMap", tMap);
-		
-		return "blog/blog-main";
+		if(blogVo != null) {	//블로그가 잘 생성되면
+			Map<String, Object> tMap = categoryService.blogTotalList(id, cateNo, postNo);
+			
+			model.addAttribute("blogVo", blogVo);
+			model.addAttribute("tMap", tMap);
+			
+			return "blog/blog-main";
+		} else {	//블로그 아이디가 없을 경우
+			return "error/403";
+		}
 	}
 	
 	//내블로그 관리 화면
