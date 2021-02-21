@@ -7,7 +7,7 @@ public class CategoryVo {
 	private String cateName;	//카테고리명
 	private String description;	//카테고리설명
 	private String regDate;		//등록일
-	private int postCount;		//포스트갯수
+	private int postCnt;		//포스트갯수
 	
 	//생성자
 	public CategoryVo() {}
@@ -19,13 +19,13 @@ public class CategoryVo {
 		this.description = description;
 	}
 
-	public CategoryVo(int cateNo, String id, String cateName, String description, String regDate, int postCount) {
+	public CategoryVo(int cateNo, String id, String cateName, String description, String regDate, int postCnt) {
 		this.cateNo = cateNo;
 		this.id = id;
 		this.cateName = cateName;
 		this.description = description;
 		this.regDate = regDate;
-		this.postCount = postCount;
+		this.postCnt = postCnt;
 	}
 
 	//메소드-g/s
@@ -69,19 +69,19 @@ public class CategoryVo {
 		this.regDate = regDate;
 	}
 
-	
-	public int getPostCount() {
-		return postCount;
+
+	public int getPostCnt() {
+		return postCnt;
 	}
 
-	public void setPostCount(int postCount) {
-		this.postCount = postCount;
+	public void setPostCnt(int postCnt) {
+		this.postCnt = postCnt;
 	}
 
 	@Override
 	public String toString() {
 		return "CategoryVo [cateNo=" + cateNo + ", id=" + id + ", cateName=" + cateName + ", description=" + description
-				+ ", regDate=" + regDate + ", postCount=" + postCount + "]";
+				+ ", regDate=" + regDate + ", postCnt=" + postCnt + "]";
 	}
 	
 	

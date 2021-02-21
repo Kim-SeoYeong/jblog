@@ -17,8 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
 import com.javaex.service.CategoryService;
+import com.javaex.service.PostService;
 import com.javaex.vo.BlogVo;
 import com.javaex.vo.CategoryVo;
+import com.javaex.vo.PostVo;
 
 @Controller
 public class BlogController {
@@ -28,6 +30,9 @@ public class BlogController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private PostService postService;
 	
 	//메인화면
 	@RequestMapping(value="/", method={RequestMethod.GET, RequestMethod.POST})
@@ -39,11 +44,7 @@ public class BlogController {
 	//개인블로그 생성화면 
 	@RequestMapping(value="/{id}", method={RequestMethod.GET, RequestMethod.POST})
 	public String blogForm(@PathVariable("id") String id, Model model) {
-		System.out.println("[BlogController.blogForm()");
-		
-		//Map<String, Object> tMap = blogService.totalSelectOne(id);
-		
-		//model.addAttribute("tMap", tMap);
+		System.out.println("[BlogController.blogForm()]");
 		
 		BlogVo blogVo = blogService.blogSelectOne(id);
 		List<CategoryVo> categoryList = categoryService.categoryList(id);
@@ -54,10 +55,19 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 	
+	//ajax로 블로그 카테고리 포스트 뿌리기
+	@ResponseBody
+	@RequestMapping(value="/admin/postList", method={RequestMethod.GET, RequestMethod.POST})
+	public List<PostVo> postList(@RequestParam("id") String id) {
+		System.out.println("[BlogController.postList()]");
+		
+		return postService.postList(id);
+	}
+	
 	//내블로그 관리 화면
 	@RequestMapping(value="/{id}/admin/basic", method={RequestMethod.GET, RequestMethod.POST})
 	public String adminForm(@PathVariable("id") String id, Model model){
-		System.out.println("[BlogController.adminForm()");
+		System.out.println("[BlogController.adminForm(])");
 		
 		BlogVo blogVo = blogService.blogSelectOne(id);
 		
@@ -68,17 +78,18 @@ public class BlogController {
 	
 	//블로그 기본설정
 	@RequestMapping(value="/upload", method={RequestMethod.GET, RequestMethod.POST})
-	public String adminBasic(@ModelAttribute BlogVo blogVo, @RequestParam("file") MultipartFile file) {
+	public String adminBasic(@ModelAttribute BlogVo blogVo, @RequestParam("file") MultipartFile file, @RequestParam("id") String id) {
+		System.out.println("[BlogController.adminBasic()]");
 		
 		blogService.profileModify(blogVo, file);
 		
-		return "redirect:/"+ blogVo.getId() + "/admin/basic";
+		return "redirect:/"+ id + "/admin/basic";
 	}
 	
 	//카테고리 관리폼
 	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
 	public String categoryForm(@PathVariable("id") String id, Model model) {
-		System.out.println("[BlogController.categoryForm()");
+		System.out.println("[BlogController.categoryForm()]");
 		
 		BlogVo blogVo = blogService.blogSelectOne(id);
 		
@@ -90,14 +101,14 @@ public class BlogController {
 	
 	//카테고리 관리 리스트 뿌리기(ajax 리스트 뿌려주기위해서 만듬)
 	@ResponseBody
-	@RequestMapping(value="/admin/list", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/admin/categoryList", method={RequestMethod.GET, RequestMethod.POST})
 	public List<CategoryVo> categoryForm(@ModelAttribute CategoryVo categoryVo) {
-		System.out.println("[BlogController.categoryForm()");
-		System.out.println(categoryVo.getId());
-		List<CategoryVo> cList = categoryService.categoryList(categoryVo.getId());
-		System.out.println(cList);
+		System.out.println("[BlogController.categoryForm()]");
+		//System.out.println(categoryVo.getId());
+		//List<CategoryVo> cList = categoryService.categoryList(categoryVo.getId());
+		//System.out.println(cList);
 		
-		return categoryService.categoryList(categoryVo.getId());
+		return categoryService.categoryPostCnt(categoryVo.getId());
 	}
 	
 	
@@ -105,10 +116,38 @@ public class BlogController {
 	@ResponseBody
 	@RequestMapping(value="/admin/categoryAdd", method={RequestMethod.GET, RequestMethod.POST})
 	public CategoryVo categoryAdd(@ModelAttribute CategoryVo categoryVo) {
-		System.out.println("[BlogController.categoryAdd()");
+		System.out.println("[BlogController.categoryAdd()]");
 		CategoryVo cateVo = categoryService.categoryInsert(categoryVo);
 		
 		return cateVo;
+	}
+	
+	//글작성 폼
+	@RequestMapping(value="/{id}/admin/writeForm", method={RequestMethod.GET, RequestMethod.POST})
+	public String writeForm(@PathVariable("id") String id, Model model) {
+		System.out.println("[BlogController.writeForm()]");
+		
+		//블로그 헤더에 데이터들을 위해 
+		BlogVo blogVo = blogService.blogSelectOne(id);
+		model.addAttribute("blogVo", blogVo);
+		
+		//카테고리 제목을 불러오기 위해
+		List<CategoryVo> categoryList = categoryService.categoryList(id);
+		model.addAttribute("categoryList", categoryList);
+		
+		return "blog/admin/blog-admin-write";
+	}
+	
+	//글작성
+	@RequestMapping(value="/admin/blogWrite", method={RequestMethod.GET, RequestMethod.POST})
+	public String write(@ModelAttribute PostVo postVo, @RequestParam("id") String id) {
+		System.out.println("[BlogController.write()]");
+		
+		//블로그 포스트 insert
+		postService.postWrite(postVo);
+		System.out.println(id);
+		
+		return "redirect:/" + id + "/admin/writeForm";
 	}
 	
 }

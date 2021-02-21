@@ -11,10 +11,10 @@ public class PostVo {
 	//생성자
 	public PostVo() {}
 
-	public PostVo(int cateNo, String postTitle) {
-		super();
+	public PostVo(int cateNo, String postTitle, String postContent) {
 		this.cateNo = cateNo;
 		this.postTitle = postTitle;
+		this.postContent = postContent;
 	}
 
 	public PostVo(int postNo, int cateNo, String postTitle, String postContent, String regDate) {

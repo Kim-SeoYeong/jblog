@@ -21,7 +21,7 @@
 			<ul id="admin-menu" class="clearfix">
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
 				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -158,14 +158,14 @@
 		str += '<tr id="t-' + categoryVo.cateNo + '">';
 		str += '	<td>' + categoryVo.cateNo + '</td>';
 		str += '	<td>' + categoryVo.cateName + '</td>';
-		str += '	<td>' + categoryVo.postCount + '</td>';
+		str += '	<td>' + categoryVo.postCnt + '</td>';
 		str += '	<td>' + categoryVo.description + '</td>';
 		str += '	<td class="text-center">';
 		str += '		<img data-no="' + categoryVo.cateNo + '"class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
 		str += '	</td>';
 		str += '</tr>';
 		
-		$("#cateList").append(str);
+		$("#cateList").prepend(str);
 	}
 	
 	//카테고리 전체 리스트 출력
@@ -177,7 +177,7 @@
 		//ajax
 		$.ajax({
 			
-			url : "${pageContext.request.contextPath}/admin/list",		
+			url : "${pageContext.request.contextPath}/admin/categoryList",		
 			type : "post",
 			//contentType : "application/json",
 			data : {id : id},
@@ -187,10 +187,10 @@
 				//성공시 처리해야될 코드 작성
 				console.log("성공!");
 				console.log(categoryList);
-				console.log(categoryList.cateNo);
-				console.log(categoryList.cateName);
 				
 				for(var i = 0; i < categoryList.length; i++) {
+					console.log(categoryList[i].cateNo);
+					console.log(categoryList[i].cateName);
 					render(categoryList[i]);
 				}
 				

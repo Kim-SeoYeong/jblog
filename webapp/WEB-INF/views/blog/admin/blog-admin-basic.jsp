@@ -21,7 +21,7 @@
 			<ul id="admin-menu" class="clearfix">
 				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -52,7 +52,7 @@
 			      			<td><input id="textLogo" type="file" name="file"></td>      			
 			      		</tr>           		
 			      	</table>
-			      	<input type="hidden" name="id" value="${blogVo.id}">
+			      	<input type="hidden" name="id" value="${authUser.id}">
 			      	<div id="btnArea">
 			      		<button class="btn_l" type="submit" >기본설정변경</button>
 			      	</div>

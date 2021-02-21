@@ -1,5 +1,7 @@
 package com.javaex.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,22 @@ public class PostDao {
 	
 	//post 글작성
 	public void postInsert(PostVo postVo) {
-		System.out.println("[postDao.postInsert()");
+		System.out.println("[postDao.postInsert()]");
 		
 		sqlSession.insert("post.postInsert", postVo);
 	}
 	
+	//카테고리 포스트 갯수 조회
+	public int postCountSelect(int cateNo) {
+		System.out.println("[categoryDao.postCountSelect()]");
+			
+		return sqlSession.selectOne("post.postCountSelect", cateNo);
+	}
+	
+	//해당카테고리에 맞는 포스트 조회하기
+	public List<PostVo> postList(String id) {
+		System.out.println("[categoryDao.postCountSelect()]");
+		
+		return sqlSession.selectList("post.postList", id);
+	}
 }

@@ -50,8 +50,9 @@ public class UserService {
 		
 		//postVo에 초기값 세팅
 		int cateNo = categoryVo.getCateNo();
+		String postContent = "";
 		//System.out.println(cateNo);
-		PostVo postVo = new PostVo(cateNo, "등록된 글이 없습니다.");
+		PostVo postVo = new PostVo(cateNo, "등록된 글이 없습니다.", postContent);
 		postDao.postInsert(postVo);
 	}
 	

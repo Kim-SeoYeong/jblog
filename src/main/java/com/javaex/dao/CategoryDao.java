@@ -23,7 +23,7 @@ public class CategoryDao {
 	*/
 	//글저장(selectKey)
 	public void insertSelectKey(CategoryVo categoryVo) {
-		System.out.println("[categoryVo] insertSelectKey()");
+		System.out.println("[categoryDao.insertSelectKey()]");
 		
 		//System.out.println("xml 실행전 ==> " + categoryVo);
 		sqlSession.insert("category.insertSelectKey", categoryVo);
@@ -32,15 +32,23 @@ public class CategoryDao {
 	
 	//카테고리 목록 조회
 	public List<CategoryVo> categoryList(String id) {
-		System.out.println("[categoryDao.categorySelect()");
+		System.out.println("[categoryDao.categorySelect()]");
 
 		return sqlSession.selectList("category.categoryList", id);
 	}
 	
+	//카테고리 목록 조회수 포함 조회
+	public List<CategoryVo> categoryPostList(String id) {
+		System.out.println("[categoryDao.categoryPostList()]");
+
+		return sqlSession.selectList("category.categoryPostList", id);
+	}
+	
 	//카테고리 1개 조회
 	public CategoryVo categorySelectOne(int cateNo) {
-		System.out.println("[categoryDao.categorySelectOne()");
+		System.out.println("[categoryDao.categorySelectOne()]");
 
 		return sqlSession.selectOne("category.cateSelectOne", cateNo);
 	}
+
 }

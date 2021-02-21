@@ -10,9 +10,44 @@
 			values (seq_post_no.nextval, 
 					#{cateNo}, 
 					#{postTitle}, 
-					null, 
+					#{postContent}, 
 					sysdate)
 		]]>
 	</insert>
+	
+	<!-- 블로그 메인화면에 뿌려줄 기본화면 포스트 조회하기 -->
+	<select id="postList" parameterType="string" resultType="com.javaex.vo.PostVo">
+		<![CDATA[
+			select  p.postNo,
+			        p.cateNo,
+			        p.postTitle,
+			        p.postContent,
+			        to_char(p.regDate, 'YYYY/MM/DD') as regDate,
+			        g.id
+			from category g, post p
+			where g.cateNo = p.cateNo
+			and g.cateNo = (select max(cateNo)
+			                from category
+			                where id = #{id})
+		]]>
+	</select>
+	
+	<!-- 블로그 메인화면에 뿌려줄 포스트 조회하기 -->
+	<!-- 
+	<select id="postList">
+		<![CDATA[
+			select  p.postNo,
+			        p.cateNo,
+			        p.postTitle,
+			        p.postContent,
+			        p.regDate,
+			        g.id
+			from category g, post p
+			where g.cateNo = p.cateNo
+			and g.id = #{id}
+			and g.cateNo = #{cateNo}
+		]]>
+	</select>
+	 -->
 
 </mapper>
