@@ -105,12 +105,6 @@
 		cateList();
 	});
 	
-	//삭제버튼 클릭시 
-	$(".text-center").on("click", "img", function(){
-		event.preventDefault();
-		console.log("삭제버튼 클릭!");
-	});
-	
 	//카테고리 추가 버튼 클릭
 	$("#btnAddCate").on("click", function(){
 		console.log("카테고리추가 버튼 클릭!");
@@ -161,7 +155,7 @@
 		str += '	<td>' + categoryVo.postCnt + '</td>';
 		str += '	<td>' + categoryVo.description + '</td>';
 		str += '	<td class="text-center">';
-		str += '		<img data-no="' + categoryVo.cateNo + '"class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
+		str += '		<img data-cateno="' + categoryVo.cateNo + '" data-postcnt="' + categoryVo.postCnt + '" class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">';
 		str += '	</td>';
 		str += '</tr>';
 		
@@ -201,6 +195,42 @@
 		});	
 	
 	}
+	
+	//삭제버튼 클릭시 
+	$("#cateList").on("click", "img", function(){
+		console.log("삭제버튼 클릭!");
+		
+		var cateNo = $(this).data("cateno");
+		console.log("cateNo : " + cateNo);
+		var postCnt = $(this).data("postcnt");
+		console.log("postCnt : " + postCnt);
+		
+		if(postCnt > 0) {
+			alert("카테고리에 포스트가 존재하여 삭제할 수가 없습니다!")
+		} else {
+			//ajax
+			$.ajax({
+				
+				url : "${pageContext.request.contextPath}/admin/delete",		
+				type : "post",
+				//contentType : "application/json",
+				data : {cateNo : cateNo},
+	
+				dataType : "json",
+				success : function(result){
+					//성공시 처리해야될 코드 작성
+					console.log("성공!");
+					//console.log(categoryList);
+					
+					$("#t-"+cateNo).remove();
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});	
+		}
+		
+	});
 
 </script>
 

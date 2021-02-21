@@ -66,5 +66,14 @@
 		where cateNo = #{cateNo}
 		]]>
 	</select>
+	
+	<!-- 카테고리 삭제하기 -->
+	<delete id="categoryDelete" parameterType="int">
+		<![CDATA[
+			delete
+			from category
+			where cateNo = #{cateNo}
+		]]>
+	</delete>
 
 </mapper>

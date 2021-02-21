@@ -22,15 +22,22 @@ public class PostDao {
 	
 	//카테고리 포스트 갯수 조회
 	public int postCountSelect(int cateNo) {
-		System.out.println("[categoryDao.postCountSelect()]");
+		System.out.println("[postDao.postCountSelect()]");
 			
 		return sqlSession.selectOne("post.postCountSelect", cateNo);
 	}
 	
 	//해당카테고리에 맞는 포스트 조회하기
-	public List<PostVo> postList(String id) {
-		System.out.println("[categoryDao.postCountSelect()]");
+	public List<PostVo> postList(int cateNo) {
+		System.out.println("[postDao.postList()]");
 		
-		return sqlSession.selectList("post.postList", id);
+		return sqlSession.selectList("post.postList", cateNo);
+	}
+	
+	//포스트 1개 조회하기
+	public PostVo postSelect(int postNo) {
+		System.out.println("[postDao.postSelect()]");
+		
+		return sqlSession.selectOne("post.postSelect", postNo);
 	}
 }

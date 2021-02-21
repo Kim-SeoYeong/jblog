@@ -13,14 +13,7 @@ public class CategoryDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	/*
-	//카테고리 insert문
-	public void categoryInsert(CategoryVo categoryVo) {
-		System.out.println("[categoryDao.categoryInsert()");
-		
-		sqlSession.insert("category.categoryInsert", categoryVo);
-	}
-	*/
+
 	//글저장(selectKey)
 	public void insertSelectKey(CategoryVo categoryVo) {
 		System.out.println("[categoryDao.insertSelectKey()]");
@@ -49,6 +42,13 @@ public class CategoryDao {
 		System.out.println("[categoryDao.categorySelectOne()]");
 
 		return sqlSession.selectOne("category.cateSelectOne", cateNo);
+	}
+	
+	//카테고리 삭제
+	public int categoryDelete(int cateNo) {
+		System.out.println("[categoryDao.categoryDelete()]");
+		
+		return sqlSession.delete("category.categoryDelete", cateNo);
 	}
 
 }

@@ -19,10 +19,5 @@ public class PostService {
 		
 		postDao.postInsert(postVo);
 	}
-	
-	public List<PostVo> postList(String id) {
-		System.out.println("[postService.postList()]");
-		
-		return postDao.postList(id);
-	}
+
 }

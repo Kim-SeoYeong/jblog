@@ -1,8 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,25 +42,19 @@ public class BlogController {
 	
 	//개인블로그 생성화면 
 	@RequestMapping(value="/{id}", method={RequestMethod.GET, RequestMethod.POST})
-	public String blogForm(@PathVariable("id") String id, Model model) {
+	public String blogForm(@PathVariable("id") String id, 
+						   @RequestParam(value="cateNo", required = false, defaultValue="0") int cateNo,
+						   @RequestParam(value="postNo", required = false, defaultValue="0") int postNo,
+						   Model model) {
 		System.out.println("[BlogController.blogForm()]");
 		
 		BlogVo blogVo = blogService.blogSelectOne(id);
-		List<CategoryVo> categoryList = categoryService.categoryList(id);
+		Map<String, Object> tMap = categoryService.blogTotalList(id, cateNo, postNo);
 		
 		model.addAttribute("blogVo", blogVo);
-		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("tMap", tMap);
 		
 		return "blog/blog-main";
-	}
-	
-	//ajax로 블로그 카테고리 포스트 뿌리기
-	@ResponseBody
-	@RequestMapping(value="/admin/postList", method={RequestMethod.GET, RequestMethod.POST})
-	public List<PostVo> postList(@RequestParam("id") String id) {
-		System.out.println("[BlogController.postList()]");
-		
-		return postService.postList(id);
 	}
 	
 	//내블로그 관리 화면
@@ -148,6 +141,15 @@ public class BlogController {
 		System.out.println(id);
 		
 		return "redirect:/" + id + "/admin/writeForm";
+	}
+	
+	//글삭제
+	@ResponseBody
+	@RequestMapping(value="/admin/delete", method={RequestMethod.GET, RequestMethod.POST})
+	public int deleteCategory(@RequestParam("cateNo") int cateNo) {
+		System.out.println("[BlogController.deleteCategory()]");
+		
+		return categoryService.deleteCategory(cateNo);
 	}
 	
 }
